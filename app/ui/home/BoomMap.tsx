@@ -33,30 +33,26 @@ const mockBooms = [
 ];
 
 const BoomMap = () => {
-  const mapContainer = useRef<HTMLDivElement>(null);
-  const map = useRef<mapboxgl.Map | null>(null);
-  const [mapboxToken] = useState(
-    "pk.eyJ1Ijoibmlja3BhcGEiLCJhIjoiY21jc2luMGQxMTMzMTJqcTAyNTRmaWszdiJ9.iodin8iWMgR5O3KcsKSA5w"
-  );
-  const [tokenSet] = useState(false);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!mapContainer.current || !tokenSet) return;
+    if (!mapContainerRef.current) return;
 
-    // Initialize map
-    mapboxgl.accessToken = mapboxToken;
+    mapboxgl.accessToken =
+      "pk.eyJ1Ijoibmlja3BhcGEiLCJhIjoiY21jc2luMGQxMTMzMTJqcTAyNTRmaWszdiJ9.iodin8iWMgR5O3KcsKSA5w";
 
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
+    // @ts-expect-error TS2740
+    mapRef.current = new mapboxgl.Map({
+      container: mapContainerRef.current,
       style: "mapbox://styles/mapbox/dark-v11",
-      center: [-111.0429, 45.677], // Bozeman coordinates
+      center: [-111.0429, 45.677],
       zoom: 12,
     });
 
-    // Add navigation controls
-    map.current.addControl(new mapboxgl.NavigationControl(), "top-right");
+    // @ts-expect-error TS2740
+    mapRef.current.addControl(new mapboxgl.NavigationControl(), "top-right");
 
-    // Add boom markers
     mockBooms.forEach((boom) => {
       const intensityColor =
         boom.intensity >= 8
@@ -65,47 +61,46 @@ const BoomMap = () => {
           ? "#ff8800"
           : "#ffaa00";
 
-      // Create marker element
       const markerEl = document.createElement("div");
       markerEl.className = "boom-marker";
       markerEl.style.cssText = `
-        width: ${20 + boom.intensity * 2}px;
-        height: ${20 + boom.intensity * 2}px;
-        background: ${intensityColor};
-        border: 2px solid #fff;
-        border-radius: 50%;
-        cursor: pointer;
-        box-shadow: 0 0 20px ${intensityColor}66;
-        animation: pulse 2s infinite;
-      `;
+      width: ${20 + boom.intensity * 2}px;
+      height: ${20 + boom.intensity * 2}px;
+      background: ${intensityColor};
+      border: 2px solid #fff;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 0 20px ${intensityColor}66;
+      animation: pulse 2s infinite;
+    `;
 
       // Create popup
       const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(`
-          <div class="p-2">
-            <h3 class="font-bold text-sm mb-1">${boom.type} Boom</h3>
-            <p class="text-xs mb-1">Intensity: ${boom.intensity}/10</p>
-            <p class="text-xs mb-1">${boom.timestamp}</p>
-            <p class="text-xs">${boom.description}</p>
-          </div>
-        `);
+        <div class="p-2">
+          <h3 class="font-bold text-sm mb-1">${boom.type} Boom</h3>
+          <p class="text-xs mb-1">Intensity: ${boom.intensity}/10</p>
+          <p class="text-xs mb-1">${boom.timestamp}</p>
+          <p class="text-xs">${boom.description}</p>
+        </div>
+      `);
 
       // Add marker
       new mapboxgl.Marker(markerEl)
         .setLngLat([boom.lng, boom.lat])
         .setPopup(popup)
-        .addTo(map.current!);
+        // @ts-expect-error TS2740
+        .addTo(mapRef.current!);
     });
 
-    // Cleanup
-    return () => {
-      map.current?.remove();
-    };
-  }, [mapboxToken, tokenSet]);
+    return () => {};
+  }, []);
 
   return (
-    <div className="relative w-full h-full">
-      <div ref={mapContainer} className="absolute inset-0 rounded-lg" />
-    </div>
+    <div
+      style={{ height: "100%" }}
+      ref={mapContainerRef}
+      className="map-container"
+    />
   );
 };
 

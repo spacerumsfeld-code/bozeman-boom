@@ -133,7 +133,7 @@ const HomePage = () => {
             )}
 
             {/* Monetization Preview */}
-            <Card className="bg-gradient-glow border-boom-accent/30 p-6">
+            {/* <Card className="bg-gradient-glow border-boom-accent/30 p-6">
               <div className="text-center space-y-4">
                 <div className="w-12 h-12 mx-auto rounded-full bg-boom-accent flex items-center justify-center">
                   <Zap className="w-6 h-6 text-primary-foreground" />
@@ -149,7 +149,7 @@ const HomePage = () => {
                   Upgrade Now
                 </Button>
               </div>
-            </Card>
+            </Card> */}
           </div>
         </div>
       </main>
