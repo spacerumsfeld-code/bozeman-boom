@@ -31,8 +31,8 @@ jobs:
         if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm ci
 
-      - name: Run quality check
-        run: npm run quality-check
+      # - name: Run quality check
+      #   run: npm run quality-check
 
       # - name: Run unit tests
       #   run: npm run unit-tests

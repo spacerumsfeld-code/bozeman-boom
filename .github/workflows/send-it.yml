@@ -12,8 +12,8 @@ permissions:
 jobs:
   merge-to-main:
     runs-on: ubuntu-latest
-    env:
-      CICD_WEB_URL: ${{ secrets.CICD_WEB_URL }}
+    # env:
+    #   CICD_WEB_URL: ${{ secrets.CICD_WEB_URL }}
     steps:
       - name: Checkout develop branch
         uses: actions/checkout@v4
