@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import BoomMap from "@/components/BoomMap";
-import BoomList from "@/components/BoomList";
-import BoomStats from "@/components/BoomStats";
+import { Button } from "~/ui/elements/button";
+import { Card } from "~/ui/elements/card";
+import { Badge } from "~/ui/elements/badge";
+import BoomMap from "./BoomMap";
+import BoomList from "./BoomList";
+import BoomStats from "./BoomStats";
 import { Volume2, Map, BarChart3, Plus, Zap } from "lucide-react";
 
 const HomePage = () => {

@@ -5,6 +5,10 @@
 
 declare module "sst" {
   export interface Resource {
+    "MapboxPublicToken": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
     "Server": {
       "name": string
       "type": "sst.aws.Function"
